@@ -4,7 +4,7 @@
   "description": "粘贴 YouTube 视频链接即可添加到笔记、白板和视频笔记，可选清晰度并支持代理。",
   "categories": ["video"],
   "keywords": ["YouTube", "视频"],
-  "version": "0.2.5",
+  "version": "0.2.6",
   "targets": {
     "desktop": {
       "minAppVersion": "0.60.2"

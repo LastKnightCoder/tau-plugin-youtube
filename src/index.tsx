@@ -25,7 +25,13 @@ export default definePlugin({
           ] }],
           beforeSave: async values => {
             const proxy = values.proxy.trim();
-            if (proxy && !/^(https?|socks5h?):$/.test(new URL(proxy).protocol)) throw new Error("代理地址格式应为 http://主机:端口 或 socks5://主机:端口");
+            let protocol = "";
+            try {
+              protocol = proxy ? new URL(proxy).protocol : "";
+            } catch {
+              // 无法解析时按格式错误处理
+            }
+            if (proxy && !/^(https?|socks5h?):$/.test(protocol)) throw new Error("代理地址格式应为 http://主机:端口 或 socks5://主机:端口");
             return { ...values, proxy };
           },
         },
