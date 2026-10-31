@@ -13,16 +13,33 @@ export default definePlugin({
       context.video.register({
         id: context.pluginId,
         name: "YouTube",
-        create: config => createYoutubeInstance(config, context.services.videoExtractor.probe),
+        create: config =>
+          createYoutubeInstance(
+            config,
+            context.services.videoExtractor.probe,
+            context.services.videoExtractor.getCaptions
+          ),
       });
       context.settings.register({
         id: "proxy",
         title: "YouTube",
         target: "video",
         form: {
-          groups: [{ title: "网络连接", fields: [
-            { key: "proxy", label: "代理地址", type: "url", optional: true, placeholder: "http://127.0.0.1:7890", description: "留空直连；支持 HTTP、HTTPS、SOCKS5 代理" },
-          ] }],
+          groups: [
+            {
+              title: "网络连接",
+              fields: [
+                {
+                  key: "proxy",
+                  label: "代理地址",
+                  type: "url",
+                  optional: true,
+                  placeholder: "http://127.0.0.1:7890",
+                  description: "留空直连；支持 HTTP、HTTPS、SOCKS5 代理",
+                },
+              ],
+            },
+          ],
           beforeSave: async values => {
             const proxy = values.proxy.trim();
             let protocol = "";
@@ -31,7 +48,8 @@ export default definePlugin({
             } catch {
               // 无法解析时按格式错误处理
             }
-            if (proxy && !/^(https?|socks5h?):$/.test(protocol)) throw new Error("代理地址格式应为 http://主机:端口 或 socks5://主机:端口");
+            if (proxy && !/^(https?|socks5h?):$/.test(protocol))
+              throw new Error("代理地址格式应为 http://主机:端口 或 socks5://主机:端口");
             return { ...values, proxy };
           },
         },

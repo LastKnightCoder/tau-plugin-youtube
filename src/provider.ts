@@ -12,6 +12,7 @@ export interface YoutubeConfig {
 }
 
 type Probe = PluginServices["videoExtractor"]["probe"];
+type GetCaptions = PluginServices["videoExtractor"]["getCaptions"];
 
 export function readConfig(value: JsonValue): YoutubeConfig {
   const proxy =
@@ -51,7 +52,9 @@ function readRef(ref: VideoRef) {
 }
 
 const byQuality = (a: VideoFormat, b: VideoFormat) =>
-  (b.height ?? 0) - (a.height ?? 0) || (b.fps ?? 0) - (a.fps ?? 0) || (b.bitrate ?? 0) - (a.bitrate ?? 0);
+  (b.height ?? 0) - (a.height ?? 0) ||
+  (b.fps ?? 0) - (a.fps ?? 0) ||
+  (b.bitrate ?? 0) - (a.bitrate ?? 0);
 
 /** 每个分辨率保留帧率、码率最高的一个视频流，搭配码率最高的音频流。 */
 export function buildVariants(url: string, formats: readonly VideoFormat[]): VideoVariant[] {
@@ -82,7 +85,11 @@ export function buildVariants(url: string, formats: readonly VideoFormat[]): Vid
   return variants;
 }
 
-export function createYoutubeInstance(value: JsonValue, probe: Probe): VideoInstance {
+export function createYoutubeInstance(
+  value: JsonValue,
+  probe: Probe,
+  getCaptions: GetCaptions
+): VideoInstance {
   const config = readConfig(value);
   return {
     matches: isYoutubeUrl,
@@ -105,6 +112,9 @@ export function createYoutubeInstance(value: JsonValue, probe: Probe): VideoInst
         ...(audio ? { audioFormat: audio } : {}),
         ...(config.proxy ? { proxy: config.proxy } : {}),
       };
+    },
+    getCaptions(ref, signal) {
+      return getCaptions(readRef(ref).url, { proxy: config.proxy, signal });
     },
   };
 }
