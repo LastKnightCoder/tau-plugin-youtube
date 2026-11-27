@@ -4,10 +4,21 @@
   "description": "粘贴 YouTube 视频链接即可添加到笔记、白板和视频笔记，可选清晰度并支持代理。",
   "categories": ["video"],
   "keywords": ["YouTube", "视频"],
-  "version": "0.2.8",
+  "locales": ["zh-CN", "zh-TW", "en-US"],
+  "i18n": {
+    "zh-TW": {
+      "description": "貼上 YouTube 影片連結即可加入到記事、白板和影片筆記，可選擇畫質並支援代理伺服器。",
+      "keywords": ["YouTube", "影片"]
+    },
+    "en-US": {
+      "description": "Paste a YouTube video link to add it to notes, whiteboards, and Video Notes, with selectable quality and proxy support.",
+      "keywords": ["YouTube", "video"]
+    }
+  },
+  "version": "0.2.9",
   "targets": {
     "desktop": {
-      "minAppVersion": "0.60.2"
+      "minAppVersion": "0.68.0"
     }
   }
 }
