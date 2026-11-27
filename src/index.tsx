@@ -1,3 +1,4 @@
+import { messages } from "./i18n";
 import { definePlugin } from "@tau/plugins";
 import { createYoutubeInstance } from "./provider";
 declare const __PLUGIN_META__: { id: string; name: string; version: string };
@@ -6,6 +7,7 @@ export default definePlugin({
   id: __PLUGIN_META__.id,
   name: __PLUGIN_META__.name,
   version: __PLUGIN_META__.version,
+  i18n: messages,
   create: () => ({
     activate(context) {
       if (!context.video || !context.services.videoExtractor)
@@ -27,15 +29,15 @@ export default definePlugin({
         form: {
           groups: [
             {
-              title: "网络连接",
+              title: messages.ref("proxy.group.title"),
               fields: [
                 {
                   key: "proxy",
-                  label: "代理地址",
+                  label: messages.ref("proxy.address.label"),
                   type: "url",
                   optional: true,
                   placeholder: "http://127.0.0.1:7890",
-                  description: "留空直连；支持 HTTP、HTTPS、SOCKS5 代理",
+                  description: messages.ref("proxy.address.description"),
                 },
               ],
             },

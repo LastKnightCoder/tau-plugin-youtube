@@ -1,0 +1,5 @@
+{
+  "proxy.group.title": "網路連線",
+  "proxy.address.label": "代理伺服器地址",
+  "proxy.address.description": "留空直連；支援 HTTP、HTTPS、SOCKS5 代理"
+}

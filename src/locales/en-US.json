@@ -1,0 +1,5 @@
+{
+  "proxy.group.title": "Network",
+  "proxy.address.label": "Proxy address",
+  "proxy.address.description": "Leave empty to connect directly; HTTP, HTTPS and SOCKS5 proxies are supported"
+}
